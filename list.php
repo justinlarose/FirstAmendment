@@ -43,19 +43,76 @@
                             
                             <a class="btn btn-default" href="submit.php" role="button">Add New Protest</a>
                           
-            
-        
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <th>Event</th>
-        <th>Date</th>
-        <th>City</th>
-        <th>State</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr onclick="window.location.href = 'details.php';">
+                            <?php
+                            echo "<table class='table table-hover'>";
+                            echo "<thead>";
+                            echo "<tr>";
+                            echo "<th>Event ID</th>";
+                            echo "<th>Event</th>";
+                            echo "<th>Date</th>";
+                            echo "<th>City</th>";
+                            echo "<th>State</th>";
+                            echo "</tr>";
+                            echo "</thead>";
+                            echo "<tbody>";
+
+                            class TableRows extends RecursiveIteratorIterator {
+
+                                function __construct($it) {
+                                    parent::__construct($it, self::LEAVES_ONLY);
+                                }
+
+                                function current() {
+                                    return "<td>" . parent::current() . "</td>";
+                                }
+
+                                function beginChildren() {
+                                    echo "<tr onclick='showDetails(this)'>";
+                                }
+
+                                function endChildren() {
+                                    echo "</tr>" . "\n";
+                                }
+
+                            }
+
+                            $servername = "localhost";
+                            $username = "root";
+                            $password = "";
+                            $dbname = "1stamendment";
+
+                            try {
+                                $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+                                // set the PDO error mode to exception
+                                $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                                $stmt = $conn->prepare("SELECT 	eventID, eventName, date_format(date, '%M %e, %Y') 
+as formatted_date, startCity, startState FROM events");
+
+                                $stmt->execute();
+
+                                // set the resulting array to associative
+                                $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
+                                foreach (new TableRows(new RecursiveArrayIterator($stmt->fetchAll())) as $k => $v) {
+                                    echo $v;
+                                }
+                            } catch (PDOException $e) {
+                                echo $sql . "<br>" . $e->getMessage();
+                            }
+
+                            $conn = null;
+                            echo "</tbody>";
+                            echo "</table>";
+                            ?>
+
+
+    <script>
+function showDetails(x) {
+    //alert("Row index is: " + x.rowIndex);
+    location.href = "details.php?eventID=14";
+}
+</script>
+ 
+<!--      <tr onclick="window.location.href = 'details.php';">
         <td>No More Final Exams!!</td>
         <td>March 18, 2017</td>
         <td>Cambridge</td>
@@ -74,7 +131,7 @@
         <td>CA</td>
       </tr>
     </tbody>
-  </table>
+  </table>-->
 
 
                         </div>

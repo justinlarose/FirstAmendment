@@ -52,14 +52,19 @@
                                     <label for="eventDescription">Description of Event</label>
                                     <textarea class="form-control" rows="3" name="eventDescription" placeholder="Brief description of the event"></textarea>
                                 </div>
+                                
+                                <div class="form-group">
+                                    <label for="eventDate">Event Date</label>
+                                    <input type="date" class="form-control" name="eventDate" >
+                                </div>
 
                                 <div class="form-group">
-                                    <label for="inputStartDateTime">Start Time</label>
-                                    <input type="datetime-local" class="form-control" name="inputStartDateTime" >
+                                    <label for="inputStartTime">Start Time</label>
+                                    <input type="time" class="form-control" name="inputStartTime" >
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputEndDateTime">End Time</label>
-                                    <input type="datetime-local" class="form-control" name="inputEndDateTime" >
+                                    <label for="inputEndTime">End Time</label>
+                                    <input type="time" class="form-control" name="inputEndTime" >
                                 </div>
 
 
@@ -127,11 +132,11 @@
                             $username = "root";
                             $password = "";
                             $dbname = "1stamendment";
-
                             $inputEvent = $_POST["inputEvent"];
                             $eventDescription = $_POST["eventDescription"];
-                            $inputStartDateTime = $_POST["inputStartDateTime"];
-                            $inputEndDateTime = $_POST["inputEndDateTime"];
+                            $eventDate = $_POST["eventDate"];
+                            $inputStartTime = $_POST["inputStartTime"];
+                            $inputEndTime = $_POST["inputEndTime"];
                             $inputStartStreet = $_POST["inputStartStreet"];
                             $startCity = $_POST["startCity"];
                             $startState = $_POST["startState"];
@@ -146,7 +151,7 @@
                                 $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
                                 // set the PDO error mode to exception
                                 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                                $sql = "INSERT INTO events (eventName, description, startTime, endTime, startAddress, startCity, startState, startZipCode, endAddress, endCity, endState, endZipCode) VALUES ('$inputEvent', '$eventDescription', '$inputStartDateTime', '$inputEndDateTime', '$inputStartStreet','$startCity','$startState','$startZip','$inputEndStreet','$endCity','$endState','$endZip')";
+                                $sql = "INSERT INTO events (eventName, description, date, startTime, endTime, startAddress, startCity, startState, startZipCode, endAddress, endCity, endState, endZipCode) VALUES ('$inputEvent', '$eventDescription', '$eventDate','$inputStartTime', '$inputEndTime', '$inputStartStreet','$startCity','$startState','$startZip','$inputEndStreet','$endCity','$endState','$endZip')";
                                 // use exec() because no results are returned
                                 if ($conn->query($sql)) {
                                     echo "<script type= 'text/javascript'>alert('New Record Inserted Successfully');</script>";
