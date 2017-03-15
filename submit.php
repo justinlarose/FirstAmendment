@@ -154,12 +154,11 @@
                                 $sql = "INSERT INTO events (eventName, description, date, startTime, endTime, startAddress, startCity, startState, startZipCode, endAddress, endCity, endState, endZipCode) VALUES ('$inputEvent', '$eventDescription', '$eventDate','$inputStartTime', '$inputEndTime', '$inputStartStreet','$startCity','$startState','$startZip','$inputEndStreet','$endCity','$endState','$endZip')";
                                 // use exec() because no results are returned
                                 if ($conn->query($sql)) {
-                                    echo "<script type= 'text/javascript'>alert('New Record Inserted Successfully');</script>";
+                                    echo "<script type= 'text/javascript'>alert('New Protest Added');</script>";
                                 } else {
-                                    echo "<script type= 'text/javascript'>alert('Data not successfully Inserted.');</script>";
+                                    echo "<script type= 'text/javascript'>alert('Error: Unable To Add Protest');</script>";
                                 }
-                                //$conn->exec($sql);
-                                //echo "New record created successfully";
+                              
                             } catch (PDOException $e) {
                                 echo $sql . "<br>" . $e->getMessage();
                             }

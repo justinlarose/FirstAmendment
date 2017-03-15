@@ -53,7 +53,8 @@
                                 $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
                                 // set the PDO error mode to exception
                                 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                                $sql = "SELECT 	eventID, eventName, date, startCity, startState FROM events";
+                                $sql = "SELECT 	eventID, eventName, date_format(date, '%M %e, %Y') 
+as formatted_date, startCity, startState FROM events";
                                 $stmt = $conn->query($sql);
 
                                 //echo $row->eventName;
@@ -78,7 +79,7 @@
                                     while ($row = $stmt->fetchObject()) {
                                         echo "<tr onclick='showDetails($row->eventID)'>";
                                         echo "<td>" . $row->eventName . "</td>";
-                                        echo "<td>" . $row->date . "</td>";
+                                        echo "<td>" . $row->formatted_date . "</td>";
                                         echo "<td>" . $row->startCity . "</td>";
                                         echo "<td>" . $row->startState . "</td>";
                                         echo "</tr>";
