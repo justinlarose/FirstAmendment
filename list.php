@@ -40,42 +40,10 @@
                         </div>
                         <div class="inner cover">
                             <h1 class="cover-heading">Upcoming Protests</h1>
-                            
+
                             <a class="btn btn-default" href="submit.php" role="button">Add New Protest</a>
-                          
+
                             <?php
-                            echo "<table class='table table-hover'>";
-                            echo "<thead>";
-                            echo "<tr>";
-                            echo "<th>Event ID</th>";
-                            echo "<th>Event</th>";
-                            echo "<th>Date</th>";
-                            echo "<th>City</th>";
-                            echo "<th>State</th>";
-                            echo "</tr>";
-                            echo "</thead>";
-                            echo "<tbody>";
-
-                            class TableRows extends RecursiveIteratorIterator {
-
-                                function __construct($it) {
-                                    parent::__construct($it, self::LEAVES_ONLY);
-                                }
-
-                                function current() {
-                                    return "<td>" . parent::current() . "</td>";
-                                }
-
-                                function beginChildren() {
-                                    echo "<tr onclick='showDetails(this)'>";
-                                }
-
-                                function endChildren() {
-                                    echo "</tr>" . "\n";
-                                }
-
-                            }
-
                             $servername = "localhost";
                             $username = "root";
                             $password = "";
@@ -85,53 +53,48 @@
                                 $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
                                 // set the PDO error mode to exception
                                 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                                $stmt = $conn->prepare("SELECT 	eventID, eventName, date_format(date, '%M %e, %Y') 
-as formatted_date, startCity, startState FROM events");
+                                $sql = "SELECT 	eventID, eventName, date, startCity, startState FROM events";
+                                $stmt = $conn->query($sql);
 
-                                $stmt->execute();
-
-                                // set the resulting array to associative
-                                $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
-                                foreach (new TableRows(new RecursiveArrayIterator($stmt->fetchAll())) as $k => $v) {
-                                    echo $v;
-                                }
+                                //echo $row->eventName;
                             } catch (PDOException $e) {
                                 echo $sql . "<br>" . $e->getMessage();
                             }
 
                             $conn = null;
-                            echo "</tbody>";
-                            echo "</table>";
                             ?>
 
+                            <table class='table table-hover'>
+                                <thead>
+                                    <tr>
+                                        <th>Event</th>
+                                        <th>Date</th>
+                                        <th>City</th>
+                                        <th>State</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    while ($row = $stmt->fetchObject()) {
+                                        echo "<tr onclick='showDetails($row->eventID)'>";
+                                        echo "<td>" . $row->eventName . "</td>";
+                                        echo "<td>" . $row->date . "</td>";
+                                        echo "<td>" . $row->startCity . "</td>";
+                                        echo "<td>" . $row->startState . "</td>";
+                                        echo "</tr>";
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
 
-    <script>
-function showDetails(x) {
-    //alert("Row index is: " + x.rowIndex);
-    location.href = "details.php?eventID=14";
-}
-</script>
- 
-<!--      <tr onclick="window.location.href = 'details.php';">
-        <td>No More Final Exams!!</td>
-        <td>March 18, 2017</td>
-        <td>Cambridge</td>
-        <td>MA</td>
-      </tr>
-      <tr>
-        <td>Blame Canada!</td>
-        <td>June 24, 2017</td>
-        <td>Detroit</td>
-        <td>MI</td>
-      </tr>
-      <tr>
-        <td>Stop The Bad Movie Sequels!</td>
-        <td>May 4, 2017</td>
-        <td>Hollywood</td>
-        <td>CA</td>
-      </tr>
-    </tbody>
-  </table>-->
+
+
+                            <script>
+                                function showDetails(eventID) {
+                                    location.href = "details.php?eventID=" + eventID;
+                                }
+                            </script>
+
 
 
                         </div>
