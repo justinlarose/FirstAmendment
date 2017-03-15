@@ -34,7 +34,7 @@
                                 <ul class="nav masthead-nav">
                                     <li><a href="index.php">Home</a></li>
                                     <li class="active"><a href="list.php">Protests</a></li>
-                                    <li><a href="#">Sign Up</a></li>
+                                    <li><a href="signup.php">Sign Up</a></li>
                                 </ul>
                             </nav>
                         </div>
