@@ -31,6 +31,7 @@
                         <div class="inner">
                             <h3 class="masthead-brand">1stAmendment</h3>
                             <nav>
+                                <!--Navigation Bar-->
                                 <ul class="nav masthead-nav">
                                     <li><a href="index.php">Home</a></li>
                                     <li class="active"><a href="list.php">Protests</a></li>
@@ -44,12 +45,14 @@
                             <a class="btn btn-default" href="submit.php" role="button">Add New Protest</a>
 
                             <?php
+                            // MySQL Connection Info
                             $servername = "localhost";
                             $username = "root";
                             $password = "";
                             $dbname = "1stamendment";
 
                             try {
+                                // Create new PDO connection object
                                 $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
                                 // set the PDO error mode to exception
                                 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -61,10 +64,10 @@ as formatted_date, startCity, startState FROM events";
                             } catch (PDOException $e) {
                                 echo $sql . "<br>" . $e->getMessage();
                             }
-
+                             // Terminate Connection
                             $conn = null;
                             ?>
-
+                            <!--Display Protest Events in Table-->
                             <table class='table table-hover'>
                                 <thead>
                                     <tr>
@@ -75,8 +78,10 @@ as formatted_date, startCity, startState FROM events";
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <!--Loop Through Protest Events-->
                                     <?php
                                     while ($row = $stmt->fetchObject()) {
+                                        // Call showDetails Javascript when a row is selected
                                         echo "<tr onclick='showDetails($row->eventID)'>";
                                         echo "<td>" . $row->eventName . "</td>";
                                         echo "<td>" . $row->formatted_date . "</td>";
@@ -91,6 +96,7 @@ as formatted_date, startCity, startState FROM events";
 
 
                             <script>
+                                // Send event ID as param to details.php when event is selected
                                 function showDetails(eventID) {
                                     location.href = "details.php?eventID=" + eventID;
                                 }

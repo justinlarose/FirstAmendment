@@ -30,6 +30,7 @@
                     <div class="masthead clearfix">
                         <div class="inner">
                             <h3 class="masthead-brand">1stAmendment</h3>
+                            <!--Navigation Bar-->
                             <nav>
                                 <ul class="nav masthead-nav">
                                     <li class="active"><a href="#">Home</a></li>
@@ -44,7 +45,8 @@
                         <h1 class="cover-heading">Welcome to 1stAmendment</h1>
                         <p class="lead">Your source for discovering and posting peaceful protest in your area.</p>
                         <p class="lead">
-                            <a href="#" class="btn btn-lg btn-default">Login</a>
+                            <!--TODO: Login Button-->
+                            <a href="#" onClick="alert('Login Feature - Coming Soon')" class="btn btn-lg btn-default">Login</a>
                         </p>
                     </div>
 

@@ -30,6 +30,7 @@
                     <div class="masthead clearfix">
                         <div class="inner">
                             <h3 class="masthead-brand">1stAmendment</h3>
+                            <!--Navigation Bar-->
                             <nav>
                                 <ul class="nav masthead-nav">
                                     <li><a href="index.php">Home</a></li>
@@ -39,6 +40,8 @@
                             </nav>
                         </div>
                         <div class="inner cover">
+                            
+                            <!--TODO: 1stAmendment Sign Up Registration Form-->
                             <h1 class="cover-heading">Registration</h1>
 
 

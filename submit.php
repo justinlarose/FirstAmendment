@@ -30,6 +30,7 @@
                     <div class="clearfix">
                         <div class="inner">
                             <h3 class="masthead-brand">1stAmendment</h3>
+                            <!--Navigation Bar-->
                             <nav>
                                 <ul class="nav masthead-nav">
                                     <li><a href="index.php">Home</a></li>
@@ -41,7 +42,7 @@
                         <div class="inner cover">
                             <h1 class="cover-heading">Submit a New Protest</h1>
 
-
+                            <!--Event submission form-->
                             <form action="" method="post">
                                 <div class="form-group">
                                     <label for="inputEvent">Name of Event</label>
@@ -128,10 +129,13 @@
 
                         <?php
                         if ($_SERVER['REQUEST_METHOD'] == "POST") {
+                            //MySQL DB connection info
                             $servername = "localhost";
                             $username = "root";
                             $password = "";
                             $dbname = "1stamendment";
+                            
+                          
                             $inputEvent = $_POST["inputEvent"];
                             $eventDescription = $_POST["eventDescription"];
                             $eventDate = $_POST["eventDate"];
@@ -148,11 +152,11 @@
 
 
                             try {
+                                // Insert Protest Event form information to DB
                                 $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
                                 // set the PDO error mode to exception
                                 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                                 $sql = "INSERT INTO events (eventName, description, date, startTime, endTime, startAddress, startCity, startState, startZipCode, endAddress, endCity, endState, endZipCode) VALUES ('$inputEvent', '$eventDescription', '$eventDate','$inputStartTime', '$inputEndTime', '$inputStartStreet','$startCity','$startState','$startZip','$inputEndStreet','$endCity','$endState','$endZip')";
-                                // use exec() because no results are returned
                                 if ($conn->query($sql)) {
                                     echo "<script type= 'text/javascript'>alert('New Protest Added');</script>";
                                 } else {
@@ -162,7 +166,7 @@
                             } catch (PDOException $e) {
                                 echo $sql . "<br>" . $e->getMessage();
                             }
-
+                               // Close connection
                             $conn = null;
                         }
                         ?>
